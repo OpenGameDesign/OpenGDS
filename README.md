@@ -37,3 +37,37 @@ A specification has the following structure:
   - Possible functionality to be added to the implementations.
 - **Implementation**
   - A detailed list of all equations and algorithms necessary to implement the spec.
+
+### Contributing
+
+You can contribute to defining these specifications by catching up with the current state of the specification and then filing an issue in the correct project. These issues will be where the feature evolves and is integrated into the specification.
+
+### Specifications
+
+#### Core
+
+The core specification which defines data types, their calculators, and other foundational mathematical structures.
+
+#### Path
+
+The specification which defines paths as functions for generating data points based on other data points. This specification is dependent on the Core specification.
+
+#### Space
+
+The specification which defines how entities in space can be organized and searched. This specification is dependent on the Core specification.
+
+#### Steering
+
+The specification which defines steering behaviors and how they can be used to create intelligent autonomous characters. This specification depends on the Space, Path, and Core specifications.
+
+#### Animation
+
+The specification which defines how to animate any attribute on any object using the traditional animation functions like playing, queueing, pausing, resuming, and transitioning. This specification depends on the Path and Core specifications.
+
+#### Particles
+
+The specification which defines the ways to define systems responsible for generating and animating particles over their lifetime. This specification depends on the Path and Core specifications.
+
+#### Networking
+
+This specification defines the structures and services involved in communicating, synchronizing, and interpolating game state (events and character updates) in any game type. This specification depends on the Path and Core specifications.
