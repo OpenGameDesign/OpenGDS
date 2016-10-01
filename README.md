@@ -52,6 +52,10 @@ The core specification which defines data types, their calculators, and other fo
 
 The specification which defines paths as functions for generating data points based on other data points. This specification is dependent on the Core specification.
 
+#### Easing
+
+The specification which defines easing functions and their types: static, procedural, decorated, and scaled.
+
 #### Space
 
 The specification which defines how entities in space can be organized and searched. This specification is dependent on the Core specification.
