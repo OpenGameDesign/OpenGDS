@@ -68,7 +68,7 @@ The specification which defines steering behaviors and how they can be used to c
 
 The specification which defines how to animate any attribute on any object using the traditional animation functions like playing, queueing, pausing, resuming, and transitioning. This specification depends on the Path and Core specifications.
 
-#### Particles
+#### Particle
 
 The specification which defines the ways to define systems responsible for generating and animating particles over their lifetime. This specification depends on the Path and Core specifications.
 
