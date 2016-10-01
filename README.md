@@ -1,6 +1,6 @@
 # OpenGDS
 
-OpenGDS (or Open Game Design Specifications) is a collection of specifications which provide generic solutions in design and implementation to several problems faced in the game programming world.
+OpenGDS (or Open Game Design Specifications) is a collection of specifications which provide generic solutions in design and implementation to several problems faced in the game programming world. These specifications are on topics unrelated to graphics & rendering - as there are existing specifications around them.
 
 Knowledge you gain from learning the specifications will be transferable as implementations for various languages are created. The specifications will be used as documentation for the implementing projects as well as provide the API definition - and the necessary equations and algorithms.
 
