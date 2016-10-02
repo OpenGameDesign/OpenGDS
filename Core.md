@@ -29,41 +29,41 @@ Performing mathematical operations on and between data types (scalar, vector, co
 ## Goals
 
 - Provide a generic Calculator API to allow the use of any data type to... <a name="calculator-goal"></a>
- - be used in mathematical operations:
-   - add, subtract, multiple, divide, scale, & interpolation.
-   - custom unary and binary operations.
- - be parsed from different data types into the desired data type.
- - be written/read to/from data streams.
- - be poolable (some data types are expensive to instantiate).
- - be copied to another data type.
- - be cloned to a new value.
- - be measured in length.
- - be measured in distance from another value.
- - be compared to another value or zero.
- - be clamped to a range of values.
- - be compared to a range of values.
- - be generated randomly from a range of values.
- - be validated to finite (values that aren't infinity or NaN).
- - be broken down into and built from scalar components.
- - be used in spatial operations to calculate...
-   - spherical interpolation.
-   - the value closest to a given value between a start and end value.
-   - the interception time of a target with a bullet.
-   - distance a given value is to start and end values.
-   - if a value is in the "view" of a value with a direction and a field-of-view.
-   - if a sphere is partially/wholy in the "view" of a value with a direction and a field-of-view.
-   - a value on a parametrized cubic curve given a set of points, a matrix, and a weight.
+  - be used in mathematical operations:
+    - add, subtract, multiple, divide, scale, & interpolation.
+    - custom unary and binary operations.
+  - be parsed from different data types into the desired data type.
+  - be written/read to/from data streams.
+  - be poolable (some data types are expensive to instantiate).
+  - be copied to another data type.
+  - be cloned to a new value.
+  - be measured in length.
+  - be measured in distance from another value.
+  - be compared to another value or zero.
+  - be clamped to a range of values.
+  - be compared to a range of values.
+  - be generated randomly from a range of values.
+  - be validated to finite (values that aren't infinity or NaN).
+  - be broken down into and built from scalar components.
+  - be used in spatial operations to calculate...
+    - spherical interpolation.
+    - the value closest to a given value between a start and end value.
+    - the interception time of a target with a bullet.
+    - distance a given value is to start and end values.
+    - if a value is in the "view" of a value with a direction and a field-of-view.
+    - if a sphere is partially/wholy in the "view" of a value with a direction and a field-of-view.
+    - a value on a parametrized cubic curve given a set of points, a matrix, and a weight.
 - Provides the base equations necessary so new Calculators can easily be added that implement just a few core operations.
 - Provide generic Geometric structures:
- - Bounds: a volumetric data structure that contains a `min` and `max` value.
- - Range: a linear data structure that exists between a `start` and `end` value.
- - Line: a linear data structure that exists on a `start` and `end` value.
- - Sphere: a spherical data structure that contains a `center` value and a `radius`.
- - Plane: a planar data structure that has `origin` and `normal` values.
+  - Bounds: a volumetric data structure that contains a `min` and `max` value.
+  - Range: a linear data structure that exists between a `start` and `end` value.
+  - Line: a linear data structure that exists on a `start` and `end` value.
+  - Sphere: a spherical data structure that contains a `center` value and a `radius`.
+  - Plane: a planar data structure that has `origin` and `normal` values.
 - Provide a generic API for the geometric structures which... <a name="geometry-goal"></a>
- - estimate a radius.
- - determine if a value lies inside or outside the structure.
- - calculate signed distance and normal a value is to the structure.
+  - estimate a radius.
+  - determine if a value lies inside or outside the structure.
+  - calculate signed distance and normal a value is to the structure.
 - Provide an API which utilizes `out` variables to keep mathematical operations from instantiating new instances.
 - Provide an API which promotes efficient use of data types.
 
