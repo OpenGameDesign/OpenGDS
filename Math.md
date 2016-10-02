@@ -1,4 +1,4 @@
-# OpenGDS Core 0.1.0
+# OpenGDS Math 0.1.0
 
 Contributors:
 - [Philip Diffenderfer (ClickerMonkey)](http://github.com/ClickerMonkey)
@@ -44,15 +44,15 @@ Contents:
 
 ## Introduction
 
-This document, referred to as the "OpenGDS Core Specification" or just "Core" hereafter, describes the OpenGDS Core API: what it is, how it acts, and what is required to implement it.
+This document, referred to as the "OpenGDS Math Specification" or just "Math" hereafter, describes the OpenGDS Math API: what it is, how it acts, and what is required to implement it.
 
 ## Definition
 
-Core addresses the mathematical foundation necessary for game programming and dependent specifications.
+Math addresses the mathematical foundation necessary for game programming and dependent specifications.
 
 ## Problem Statement
 
-Performing mathematical operations on and between data types (scalar, vector, colors, etc) is a necessity in game programming. These data types with other values can also be used to define geometric structures which are used in other areas such as particle systems, collision detection, spatial databases, steering behaviors, and animation. Core addresses these operations and structures.
+Performing mathematical operations on and between data types (scalar, vector, colors, etc) is a necessity in game programming. These data types with other values can also be used to define geometric structures which are used in other areas such as particle systems, collision detection, spatial databases, steering behaviors, and animation. Math addresses these operations and structures.
 
 ## Goals
 
@@ -173,7 +173,7 @@ The design will be described using the following concepts. These concepts may di
 
 #### Calculator< T >
 
-An abstract class that contains all the methods mentioned in [Goals](#calculator-goal). Implementations of Core may not have any calculator implementations since they're tied to specific data types which are tied to other libraries. There will most likely be a library of calculators for any type of library that needs to interface with Core and all other OpenGDS. Calculators are the only classes that need to be created to use any OpenGDS.
+An abstract class that contains all the methods mentioned in [Goals](#calculator-goal). Implementations of Math may not have any calculator implementations since they're tied to specific data types which are tied to other libraries. There will most likely be a library of calculators for any type of library that needs to interface with Math and all other OpenGDS. Calculators are the only classes that need to be created to use any OpenGDS.
 
 The calculator has a static factory method which takes some input that describes a data type and returns the proper calculator. The calculator has a static method to also register a calculator to a data type description.
 
