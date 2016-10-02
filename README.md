@@ -31,7 +31,7 @@ A specification has the following structure:
   - Words important to understanding how the specification is going to solve the problem.
 - **Design** 
   - Using the concepts, define structures and algorithms necessary to meet the goals.
-- **Core API**
+- **API**
   - A language-agnostic definition of classes and services in the spec.
 - **Additional API**
   - Possible functionality to be added to the implementations.
@@ -44,13 +44,13 @@ You can contribute to defining these specifications by catching up with the curr
 
 ### Specifications
 
-#### Core
+#### Math
 
-The core specification which defines data types, their calculators, and other foundational mathematical structures.
+The math specification which defines data types, their calculators, and other foundational mathematical structures.
 
 #### Path
 
-The specification which defines paths as functions for generating data points based on other data points. This specification is dependent on the Core specification.
+The specification which defines paths as functions for generating data points based on other data points. This specification is dependent on the Math specification.
 
 #### Easing
 
@@ -58,20 +58,20 @@ The specification which defines easing functions and their types: static, proced
 
 #### Space
 
-The specification which defines how entities in space can be organized and searched. This specification is dependent on the Core specification.
+The specification which defines how entities in space can be organized and searched. This specification is dependent on the Math specification.
 
 #### Steering
 
-The specification which defines steering behaviors and how they can be used to create intelligent autonomous characters. This specification depends on the Space, Path, and Core specifications.
+The specification which defines steering behaviors and how they can be used to create intelligent autonomous characters. This specification depends on the Space, Path, and Math specifications.
 
 #### Animation
 
-The specification which defines how to animate any attribute on any object using the traditional animation functions like playing, queueing, pausing, resuming, and transitioning. This specification depends on the Path and Core specifications.
+The specification which defines how to animate any attribute on any object using the traditional animation functions like playing, queueing, pausing, resuming, and transitioning. This specification depends on the Path and Math specifications.
 
 #### Particle
 
-The specification which defines the ways to define systems responsible for generating and animating particles over their lifetime. This specification depends on the Path and Core specifications.
+The specification which defines the ways to define systems responsible for generating and animating particles over their lifetime. This specification depends on the Path and Math specifications.
 
 #### Networking
 
-This specification defines the structures and services involved in communicating, synchronizing, and interpolating game state (events and character updates) in any game type. This specification depends on the Path and Core specifications.
+This specification defines the structures and services involved in communicating, synchronizing, and interpolating game state (events and character updates) in any game type. This specification depends on the Path and Math specifications.
