@@ -4,8 +4,6 @@ OpenGDS (or Open Game Design Specifications) is a collection of specifications w
 
 Knowledge you gain from learning the specifications will be transferable as implementations for various languages are created. The specifications will be used as documentation for the implementing projects as well as provide the API definition - and the necessary equations and algorithms.
 
-There exists a **core** spec which the others rely on - this spec merely defines concepts necessary for the other specs to operate generically. Much like a library has a dependency to fulfill same basic utility, OpenGDS has a core spec which lays the groundwork for the other specs.
-
 ### Goals
 
 - To provide specifications that are ready to be implemented. 
