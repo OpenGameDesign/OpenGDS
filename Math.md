@@ -22,6 +22,7 @@ Contents:
     - [Plane](#plane)
 - [Design](#design)
   - [Calculator](#calculator-t-)
+  - [Calculator Registry](#calculatorregistry)
   - [Unary Operation](#unaryoperation-s-)
   - [Binary Operation](#binaryoperation-s-)
   - [Geometry](#geometry-t-)
@@ -33,6 +34,7 @@ Contents:
   - [OpenMath](#openmath)
 - [API](#core-api)
   - [Calculator](#calculator-t--1)
+  - [Calculator Registry](#calculatorregistry-1)
   - [Geometry](#geometry-t--1)
   - [Bounds](#bounds-t--1)
   - [Range](#range-t--1)
@@ -182,6 +184,10 @@ The design will be described using the following concepts. These concepts may di
 An abstract class that contains all the methods mentioned in [Goals](#calculator-goal). Implementations of Math may not have any calculator implementations since they're tied to specific data types which are tied to other libraries. There will most likely be a library of calculators for any type of library that needs to interface with Math and all other OpenGDS. Calculators are the only classes that need to be created to use any OpenGDS.
 
 The calculator has a static factory method which takes some input that describes a data type and returns the proper calculator. The calculator has a static method to also register a calculator to a data type description.
+
+### `CalculatorRegistry`
+
+A static class that contains all registered calculators and is responsible for returning a calculator based on the data type or the name of the calculator.
 
 ### `UnaryOperation< S >`
 
@@ -344,6 +350,19 @@ The following expressions are used in the API:
   Sets and returns `out` as the point `delta` along the cubic curve between the four given points `p0`, `p1`, `p2`, and `p3` described by the given `matrix`.
 ##### `parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float ): T`
   Sets and returns `out` as the point `delta` along the cubic curve between the given `points` described by the given `matrix` and scaled by `weight`.
+
+### `CalculatorRegistry`
+
+##### `getFor( value ): Calculator<T>`
+  Returns the calculator for the given `value`.
+##### `get( nameOrType ): Calculator<T>`
+  Returns the calculator for the given `nameOrType`.
+##### `register( namesOrTypes[], calculator:Calculator<T> )`
+  Adds the given `calculator` to the registry for the given array of `namesOrTypes`.
+##### `getDefault(): Calculator<T>`
+  Returns the default calculator. The default calculator is returned when a calculator can't be determined in get or getFor. This is typically for loosely typed languages.
+##### `setDefault( calculator:Calculator<T> )`
+  Sets the default calculator. The default calculator is returned when a calculator can't be determined in get or getFor. This is typically for loosely typed languages.
 
 ### `Geometry< T >`
 
