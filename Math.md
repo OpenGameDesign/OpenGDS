@@ -30,6 +30,7 @@ Contents:
   - [Line](#line-t-)
   - [Sphere](#sphere-t-)
   - [Plane](#plane-t-)
+  - [OpenMath](#openmath)
 - [API](#core-api)
   - [Calculator](#calculator-t--1)
   - [Geometry](#geometry-t--1)
@@ -38,8 +39,10 @@ Contents:
   - [Line](#line-t--1)
   - [Sphere](#sphere-t--1)
   - [Plane](#plane-t--1)
+  - [OpenMath](#openmath-1)
 - [AdditionalAPI](#additional-api)
   - [Calculator](#calculator-t--2)
+  - [OpenMath](#openmath-2)
 - [Implementation](#implementation)
 
 ## Introduction
@@ -52,10 +55,13 @@ Math addresses the mathematical foundation necessary for game programming and de
 
 ## Problem Statement
 
-Performing mathematical operations on and between data types (scalar, vector, colors, etc) is a necessity in game programming. These data types with other values can also be used to define geometric structures which are used in other areas such as particle systems, collision detection, spatial databases, steering behaviors, and animation. Math addresses these operations and structures.
+Performing mathematical operations on and between data types (scalar, vector, colors, etc) is a necessity in game programming. In most APIs there's a tendency to place mathematical operations on the data type. This adds a lot of duplicate math across various data types which can cascade throughout the entire code base. This also can couple your codebase to other libraries. These data types with other values can be used to define geometric structures which are used in other areas such as particle systems, collision detection, spatial databases, steering behaviors, and animation. Math addresses these operations and structures.
 
 ## Goals
 
+- Provide a way to allow an existing codebase to take advantage of OpenGDS. This is the main goal of Math and achieves this with Calculators and Geometry.
+- Provide a way to reuse mathematical equations and algorithms across any data type.
+- Provide an API which promotes efficient use of data types.
 - Provide a generic Calculator API to allow the use of any data type to... <a name="calculator-goal"></a>
   - be used in mathematical operations:
     - add, subtract, multiple, divide, scale, & interpolation.
@@ -90,10 +96,10 @@ Performing mathematical operations on and between data types (scalar, vector, co
   - Plane: a planar data structure that has `origin` and `normal` values.
 - Provide a generic API for the geometric structures which... <a name="geometry-goal"></a>
   - estimate a radius.
-  - determine if a value lies inside or outside the structure.
-  - calculate signed distance and normal a value is to the structure.
+  - determine if a value lies inside, outside, or intersects with the structure.
+  - calculate signed distance and a normal value to the structure.
 - Provide an API which utilizes `out` variables to keep mathematical operations from instantiating new instances.
-- Provide an API which promotes efficient use of data types.
+- Provide a simple API for common math functions.
 
 ## Concepts
 
@@ -209,13 +215,17 @@ An implementation of the Geometry interface that satisfies the [Sphere](#sphere)
 
 An implementation of the Geometry interface that satisfies the [Plane](#plane) concept.
 
+### OpenMath
+
+A collection of static functions to perform common mathematical operations.
+
 ## API
 
 This API describes the design showing all variables on a class, methods in an interface or class, and the argument names and types for functions and methods.
 
 The following expressions are used in the API:
 
-- `methodName(): type`: Describes a method with returns a value with the given type.
+- `methodName(): type`: Describes a method which returns a value with the given type.
 - `variableName`: Describes a parameter with an unknown type passed to a method.
 - `variableName[]`: Describes an array parameter with an unknown type passed to a method.
 - `variableName:type`: Describes a parameter and its type passed to a method.
@@ -228,15 +238,15 @@ The following expressions are used in the API:
 - `Input`: The language specific input stream that scalar types can be read from.
 - `size`: The language variable type to express how much memory/space a data type takes up when its read/written from Input/Output.
 
-### Calculator< T >
+### `Calculator< T >`
 
 ##### `ZERO: T`
-  An instance of the data type with components with values of 0.
+  An instance of the data type with components with values of 0. This should be read-only if possible - otherwise this should never be passed to functions as an `out` parameter.
 ##### `ONE: T`
-  An instance of the data type with components with values of 1.
+  An instance of the data type with components with values of 1. This should be read-only if possible - otherwise this should never be passed to functions as an `out` parameter.
 ##### `create(): T`
-  Creates a new instance of T with components with values of 0.
-##### `create( component:S ): T`
+  Creates a new instance of T with components with values of 0. If pooling is enabled on the calculator, this may take from the pool.
+##### `createUniform( component:S ): T`
   Creates a new instance of T with components with values of `component`.
 ##### `clone( source:T ): T`
   Creates a new instance of T with components with the same values in `source`.
@@ -267,92 +277,181 @@ The following expressions are used in the API:
 ##### `interpolate( out:T, start:T, end:T, delta:float ): T`
   Sets `out` to the value between `start` and `end` given a `delta` value. When `delta` is 0 `out` will be set to `start`, when `delta` is 1 `out` will be set to `end`, and when `delta` is set to 0.5 then `out` will be set to a value halfway between `start` and `end` (etc).
 ##### `contain( out:T, min:T, max:T ): T`
-##### `contains( out:T, min:T, max:T ): bool`
+  Adjusts `out` to be contained between the area between `min` and `max` (if it's outside that area) and returns `out`.
+##### `contains( point:T, min:T, max:T ): bool`
+  Returns whether `point` exists (inclusively) in the area between `min` and `max`.
 ##### `random( out:T, min:T, max:T, ?randomizer:function ): T`
+  Sets `out` to a random value in the area between `min` and `max` and returns `out`.
 ##### `distance( a:T, b:T ): float`
+  Calculates the distance between `a` and `b`.
 ##### `distanceSq( a:T, b:T ): float`
+  Calculates the squared distance between `a` and `b`.
 ##### `length( value:T ): float`
+  Calculates the length of `value` - which is essentially the shortest distance from `value` to zero.
 ##### `lengthSq(valuea:T ): float`
+  Calculates the squared length of `value` - which is essentially the shortest distance from `value` to zero squared.
 ##### `normal( out:T, vector:T ): float`
+  Sets `out` to the normal of `vector` and returns the length of `vector`.
 ##### `isFinite( value:T ): bool`
+  Determines whether the given `value` is finite. False is returned if any of the scalar values in the value are Infinity or NaN.
 ##### `isZero( value:T, ?epsilon:float=0.00001 ): bool`
+  Determines whether the given `value` is equal to zero within some `epsilon` threshold.
 ##### `isEqual( a:T, b:T, ?epsilon:float=0.00001 ): bool`
+  Determines whether `a` equals `b` within some `epsilon` threshold.
 ##### `dot( a:T, b:T ): float`
+  Calculates and returns the dot product between `a` and `b`.
 ##### `lengthen( out:T, length:float ): T`
+  Sets the length of `out` to `length` and returns `out`.
 ##### `clamp( out:T, min:float, max:float ): T`
+  Sets the length of `out` between `min` and `max` if it lies outside that range - and returns `out`.
 ##### `sizeof( value:T ): size`
+  Computes the size of `value` and returns it.
 ##### `write( value:T, to:Output ): size`
+  Writes `value` to `to` and returns the size it took up.
 ##### `read( out:T, from:Input ): T`
+  Reads `out` from `from` and returns `out`.
 ##### `getDimensions(): int`
-##### `getComponentCount(): int`
+  Returns the number of dimensions in the data type. A data type can have fewer dimensions than components (ex: homogeneous coordinates).
+##### `getComponents(): int`
+  Returns the number of components in the data type. Components are typically scalar values.
 ##### `getComponent( value:T, index:int ): S`
+  Returns the component in `value` at the given `index`.
 ##### `setComponent( value:T, index:int, component:S ): T`
+  Sets the component of `value` at the given `index` with the given `component` value and returns `value`.
+##### `getDimension( value:T, index:int ): S`
+  Returns the dimension in `value` at the given `index`.
+##### `setDimension( value:T, index:int, dimension:S ): T`
+  Sets the dimension of `value` at the given `index` with the given `dimension` value and returns `value`.
 ##### `slerpDirect( out:T, start:T, end:T, delta:float ): T`
+  Sets `out` to the spherical interpolation `delta` between `start` and `end` on the shortest arc between the two points and returns `out`.
 ##### `slerpNormal( out:T, start:T, end:T, delta:float ): T`
+  Sets `out` to the spherical interpolation `delta` between the normals `start` and `end` on the shortest arc between the two normals and returns `out`.
 ##### `slerp( out:T, start:T, end:T, delta:T, angle: T ): T`
-##### `closest( out:T, start:T, end:T, point:T ): T`
-##### `intercept( shooter:T, speed:float, targetPosition:T, targetVelocity:T ): float`
-##### `distanceFromLine( start:T, end:T, point:T ): float`
+  Sets `out` to the spherical interpolation `delta` between `start` and `end` on the arc with `angle` radians and returns `out`.
+##### `delta( start:T, end:T, point:T ): float`
+  Returns the value which describes the point on the infinitely long line between `start` and `end` that is perpendicular to the given `point`. If `point` is perpendicular to `start` then 0 is returned, if `point` is perpendicular to the average of `start` and `end` then 0.5 is returned, etc.
+##### `closest( out:T, start:T, end:T, point:T, ?line:bool=false ): T`
+  Sets `out` to the closest value on the line between `start` and `end` that is perpendicular to `point`. If `line` is false then the value returned will exist between `start` and `end`. If `line` is true then the value returned will exist on the infinite line that lies on `start` and `end` and is perpendicular to `point`.
+##### `interceptionTime( shooter:T, speed:float, targetPosition:T, targetVelocity:T ): float`
+  Calculates the time it would take a bullet to travel from `shooter` at `speed` to hit `targetPosition` which is moving `targetVelocity`. If its not possible to intersect the target with a bullet then a negative value will be returned.
+##### `distanceFrom( start:T, end:T, point:T, ?line:bool=false ): float`
+  Calculates the distance from `point` to the range or line between `start` and `end`.
 ##### `inView( origin:T, direction:T, fovCos:float, point:T ): bool`
+  Determines whether `point` is in the conical view starting at `origin` with the `direction` normal and the inner angle of the cone `fovCos` passed in as the cosine of the desired angle.
 ##### `isCircleView( origin:T, direction:T, fovTan:float, fovCos:float, center:T, radius:float, entirely:bool ): bool`
-##### `cubicCurve( out:T, delta:float, p0:T, p1:T, p2:T, p3:T, matrix[4][4]:float )`
-##### `parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float )`
+  Determines whether the circle at `center` with `radius` is in the conical view starting at `origin` with the `direction` normal and the inner angle of the cone `fovCos` passed in as the cosine of the desired angle.
+##### `cubicCurve( out:T, delta:float, p0:T, p1:T, p2:T, p3:T, matrix[4][4]:float ): T`
+  Sets and returns `out` as the point `delta` along the cubic curve between the four given points `p0`, `p1`, `p2`, and `p3` described by the given `matrix`.
+##### `parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float ): T`
+  Sets and returns `out` as the point `delta` along the cubic curve between the given `points` described by the given `matrix` and scaled by `weight`.
 
 ### Geometry< T >
 
 ##### `hasRadius(): bool`
+  Determines whether this geometry can calculate a finite radius.
 ##### `getRadius(): float`
-##### `getCenter(): T`
+  Calculates the finite radius of this geometry. The radius and center of the geometry should fully encapsulate the geometry.
+##### `getCenter( out:T ): T`
+  Sets and returns `out` to the center of this geometry.
 ##### `getDistance( point:T ): float`
+  Calculates and returns the signed distance between this geometry and the given `point`. If the `point` is inside this geometry a negative value is returned.
 ##### `getDistanceAndNormal( point:T, normal:T ): float`
-##### `isInside( point:T ): bool`
-##### `isOutside( point:T ): bool`
+  Calculates and returns the signed distance between this geometry and the given `point` as well as setting the `normal` which describes the direction from `point` to the edge of the geometry as a normalized value (-distance away where distance is the value returned).
+##### `isInside( point:T, ?radius:float=0 ): bool`
+  Determines whether `point` is entirely inside this geometry taking into account an optional `radius` which describes a sphere around `point`.
+##### `isOutside( point:T, ?radius:float=0 ): bool`
+  Determines whether `point` is entirely outside this geometry taking into account an optional `radius` which describes a sphere around `point`.
+##### `isIntersecting( point:T, ?radius:float=0 ): bool`
+  Determines whether `point` is partially or entirely inside this geometry taking into an optional `radius` which describes a sphere around `point`.
 ##### `random( out:T, ?maxDistanceFromCenter:float=infinity, ?randomizer:function ): T`
+  Sets and returns `out` as a random value in this geometry which is no more than `maxDistanceFromCenter` away from the center using the `randomizer` function to generate a number between 0 and 1.
 
 ### Bounds< T > : Geometry< T >
 
 ##### `min: T`
+  The minimum value which describes the bounds. The dimensions in this value must be less than or equal to the respective dimensions in `max`.
 ##### `max: T`
-##### `center: T`
+  The maximum value which describes the bounds. The dimensions in this value must be greater than or equal to the respective dimensions in `min`.
 ##### `thickness: float`
+  The thickness of the edges of this bounds. A non-zero value adds rounded corners to the bounds.
 
 ### Range< T > : Geometry< T >
 
-##### `min: T`
-##### `max: T`
-##### `center: T`
+##### `start: T`
+  The starting value which describes the range.
+##### `end: T`
+  The ending value which describes the range.
 ##### `thickness: float`
+  The thickness of this range. A non-zero value adds rounded corners to the range creating a "pill".
 
 ### Line< T > : Geometry< T >
 
 ##### `start: T`
+  The starting value which describes the line.
 ##### `end: T`
-##### `center: T`
+  The ending value which describes the line.
 ##### `thickness: float`
+  The thickness of this line.
 
 ### Sphere< T > : Geometry< T >
 
 ##### `center: T`
+  The center value of this sphere.
 ##### `radius: float`
+  The radius of this sphere.
 
 ### Plane< T > : Geometry< T >
 
 ##### `origin: T`
+  The origin of this plane.
 ##### `normal: T`
+  The normal of this plane. The set of values perpendicular to this value describe the surface of the plane.
 ##### `thickness: float`
+  The thickness of this plane.
+
+### `OpenMath`
+
+##### `gcd( a:int, b:int ): int`
+  Calculates the greatest common divisor between `a` and `b`;
+##### `factorial( a:int ): int`
+  Calculates the factorial of `a`.
+##### `choose( n:int, m:int ): int`
+  Calculates the binomial coefficient of `n` and `m`. This is used in combinatorics where it gives the number of ways, disregarding order, that `n` objects can be chosen from among `m` objects.
 
 ## Additional API
 
 ### Calculator< T >
 
 ##### `setPool( pool[]:T )`
+  Initializes the `pool` in the calculator with an already allocated array. The `pool` enables reuse of values that may be expensive to allocate. The create method of the calculator and all other methods which create a new value may take from this pool to avoid allocation.
 ##### `recycle( value:T ): bool`
+  Adds the given value to the pool if it's been initialized and there's room.
 ##### `min( out:T, a:T, b:T ): T`
+  Sets `out` to the minimum components from `a` and `b` and returns `out`. This is equivalent to passing a min function to the binary calculator method.
 ##### `max( out:T, a:T, b:T ): T`
+  Sets `out` to the maximum components from `a` and `b` and returns `out`. This is equivalent to passing a max function to the binary calculator method.
 ##### `avg( out:T, a:T, b:T ): T`
+  Sets `out` to the maximum components from `a` and `b` and returns `out`. This is equivalent to passing a max function to the binary calculator method. Calling interpolate with a delta of 0.5 may result in the same value - but this could be calculated faster.
 ##### `abs( out:T ): T`
+  Sets the components of `out` to their absolute value and returns `out`. This is equivalent to passing a abs function to the unary calculator method.
 ##### `floor( out:T ): T`
+  Sets the components of `out` to their floor value and returns `out`. This is equivalent to passing a floor function to the unary calculator method.
 ##### `ceil( out:T ): T`
+  Sets the components of `out` to their ceiling value and returns `out`. This is equivalent to passing a ceil function to the unary calculator method.
 ##### `round( out:T ): T`
+  Sets the components of `out` to their rounded value and returns `out`. This is equivalent to passing a round function to the unary calculator method.
+##### `neg( out:T ): T`
+  Sets the components of `out` to their negative value and returns `out`. This is equivalent to passing a negating function to the unary calculator method.
+
+### `OpenMath`
+
+##### `setRandomSeed( seed:int )`
+  Sets a random seed which all subsequent random functions use to generate a random value.
+##### `randomDelta(): float`
+  Returns a random float between 0 (inclusive) and 1 (exclusive).
+##### `random( min:float, max:float ): float`
+  Returns a random float between `min` (inclusive) and `max` (exclusive).
+##### `randomInt( min:float, max:float ): float`
+  Returns a random integer between `min` (inclusive) and `max` (inclusive).
 
 ## Implementation
