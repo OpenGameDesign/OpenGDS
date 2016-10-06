@@ -2,15 +2,16 @@
 
 OpenGDS (or Open Game Design Specifications) is a collection of specifications which provide generic solutions in design and implementation to several problems faced in the game programming world. These specifications are on topics unrelated to graphics & rendering - as there are existing specifications around them.
 
-Knowledge you gain from learning the specifications will be transferable as implementations for various languages are created. The specifications will be used as documentation for the implementing projects as well as provide the API definition - and the necessary equations and algorithms.
+Knowledge you gain from learning the specifications will be transferable as implementations for various languages are created. The specifications will be used as documentation for the implementing projects, provide the API definition, and the equations and algorithms necessary for implementation.
 
 ### Goals
 
-- To provide specifications that are ready to be implemented. 
+- Provide design solutions that can work on existing & future codebases.
+- Provide specifications that are ready to be implemented.
   - They start with enough high-level explanation that a non-programmer can learn the topic.
-  - In the middle a contract (API) is developed and documentated.
+  - In the middle a contract (API) is developed and documented.
   - They end with enough low-level details (equations, basic algorithms) so there isn't anything left unsolved for implementing libraries.
-- To provide a unified design which allows a single documentation source that multiple libraries across different languages can all share.
+- Provide a unified design which allows a single documentation source that multiple libraries across different languages can all share.
 
 
 ### Structure
@@ -19,15 +20,17 @@ A specification has the following structure:
 
 - **Title**
   - Short description of the topic which should be as universally understood as possible.
+- **Introduction**
+  - Sets specification expectations.
 - **Definition**
   - Long description of the topic, includes other names and related topics.
-- **Problem Statement** 
+- **Problem Statement**
   - List of challenges to be solved.
-- **Goals** 
+- **Goals**
   - The features for the specification and a set of solutions to the problems.
-- **Concepts** 
+- **Concepts**
   - Words important to understanding how the specification is going to solve the problem.
-- **Design** 
+- **Design**
   - Using the concepts, define structures and algorithms necessary to meet the goals.
 - **API**
   - A language-agnostic definition of classes and services in the spec.
@@ -46,13 +49,13 @@ You can contribute to defining these specifications by catching up with the curr
 
 The math specification which defines data types, their calculators, and other foundational mathematical structures.
 
-#### Path
-
-The specification which defines paths as functions for generating data points based on other data points. This specification is dependent on the Math specification.
-
 #### Easing
 
 The specification which defines easing functions and their types: static, procedural, decorated, and scaled.
+
+#### Path
+
+The specification which defines paths as functions for generating data points based on other data points. This specification is dependent on the Math specification.
 
 #### Space
 
@@ -73,3 +76,21 @@ The specification which defines the ways to define systems responsible for gener
 #### Networking
 
 This specification defines the structures and services involved in communicating, synchronizing, and interpolating game state (events and character updates) in any game type. This specification depends on the Path and Math specifications.
+
+### Possible Specifications
+
+#### Input
+
+A specification which defines ways to handle, track, and utilize user input. This specification would aim to provide a generic implementation for input, combinations (^^vv<><>BA), cumulative (useful for networking), and state transforming (useful for replays and networking).
+
+#### Views
+
+A specification which defines ways to keep your rendering code separate from your game logic. This simplifies networking code (through decoupling), enables degradation in implementation based on whats supported by their machine, and allows you to reuse your code with a different graphics library.
+
+#### UI
+
+A specification which describes how user interface elements work (events), how to render them, how to create themes, manage their state, and provides definitions of commonly used elements and how they behave.
+
+#### Tasks
+
+A specification which describes how to offload game logic or background rendering to threads. These tasks are small items which can trigger other tasks.
