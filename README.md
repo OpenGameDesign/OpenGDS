@@ -6,13 +6,21 @@ Knowledge you gain from learning the specifications will be transferable as impl
 
 ### Goals
 
+To offer `generic`, `forward compatible`, and `powerful` solutions to problems in game programming and provide `designs` which can be used across languages for easy `transitioning` between languages and codebases.
+
+In more detail:
+
 - Provide design solutions that can work on existing & future codebases.
+- Provide design solutions that are powerful - requires the user to only specify the parameters - and have the solutions do all the heavy lifting.
 - Provide specifications that are ready to be implemented.
   - They start with enough high-level explanation that a non-programmer can learn the topic.
   - In the middle a contract (API) is developed and documented.
   - They end with enough low-level details (equations, basic algorithms) so there isn't anything left unsolved for implementing libraries.
 - Provide a unified design which allows a single documentation source that multiple libraries across different languages can all share.
 
+### Concerns
+
+- These specifications provide powerful & generic solutions which inevitably adds overhead when compared to implementing a minimal solution to your problems.
 
 ### Structure
 
@@ -78,6 +86,14 @@ The specification which defines the ways to define systems responsible for gener
 This specification defines the structures and services involved in communicating, synchronizing, and interpolating game state (events and character updates) in any game type. This specification depends on the Path and Math specifications.
 
 ### Possible Specifications
+
+#### StateMachine
+
+A specification which defines how to manage game states, the conditions which cause a transition, and the events that are triggered when a state is entered, is active, and is left.
+
+#### PathFinding
+
+A specification which defines ways of finding a path from one point to another in a world. A simple interface to the world defines the nodes, which travelers can be on the nodes, the moves available from one node to another, how much it "cost" to move from one node to another, and other variables on a node or move that may affect its selection in the path. Different algorithms and heuristics are defined to allow the user to use which pathfinding algorithm is most suited for their game. Other features include caching paths for quick reuse, setting limits on how much time or resources are used to find a path, allowing the user to modify or cancel a path, simplifying paths into fewer nodes/moves, provide a  prioritized queue to handle large pathfinding requests.
 
 #### Input
 
