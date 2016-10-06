@@ -102,10 +102,10 @@ A specification has the following structure:
   - Possible functionality to be added to the implementations.
 - **Implementation**
   - A detailed list of all equations and algorithms necessary to implement the spec.
-  
+
 ### Concerns
 
-- These specifications provide powerful & generic solutions which inevitably adds overhead when compared to implementing a minimal solution to your problems.
+- These specifications provide powerful & generic solutions which inevitably adds overhead when compared to implementing a minimal solution to your problem. For example - the Particles design allows for very complicated behaviors to be described in a brief definition - but all of this formal structure could hurt performance if you're trying to render millions of particles. Implementing a simplified particle system which reduces memory usage and function calls would be necessary in the situation as described - but it would take a lot of extra time and possible introduce user error.
 
 ### Contributing
 
