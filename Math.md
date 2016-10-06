@@ -177,45 +177,45 @@ The design will be described using the following concepts. These concepts may di
 | < S > | The symbol which signifies a generic class, interface, or function which deals with a component of a data type (ex: float, int, etc). |
 | S | The argument type which represents the component type. |
 
-#### Calculator< T >
+### `Calculator< T >`
 
 An abstract class that contains all the methods mentioned in [Goals](#calculator-goal). Implementations of Math may not have any calculator implementations since they're tied to specific data types which are tied to other libraries. There will most likely be a library of calculators for any type of library that needs to interface with Math and all other OpenGDS. Calculators are the only classes that need to be created to use any OpenGDS.
 
 The calculator has a static factory method which takes some input that describes a data type and returns the proper calculator. The calculator has a static method to also register a calculator to a data type description.
 
-#### UnaryOperation< S >
+### `UnaryOperation< S >`
 
 A function which takes a component of type `S` and returns a value of type `S`. These functions are passed to the calculator to process each component of a value to generate a new value. Examples of unary operations: `abs`, `floor`, `ceil`, `round`, `sin`, etc.
 
-#### BinaryOperation< S >
+### `BinaryOperation< S >`
 
 A function which takes two components of type `S` and returns a component of type `S`. These functions are passed to the calculator to process each component of two values to generate a new value. Examples of binary operations: `avg`, `min`, `max`, etc.
 
-#### Geometry< T >
+### `Geometry< T >`
 
 An interface that contains all methods mentioned in [Goals](#geometry-goal).
 
-#### Bounds< T >
+### `Bounds< T >`
 
 An implementation of the Geometry interface that satisfies the [Bounds](#bounds) concept.
 
-#### Range< T >
+### `Range< T >`
 
 An implementation of the Geometry interface that satisfies the [Range](#range) concept.
 
-#### Line< T >
+### `Line< T >`
 
 An implementation of the Geometry interface that satisfies the [Line](#line) concept.
 
-#### Sphere< T >
+### `Sphere< T >`
 
 An implementation of the Geometry interface that satisfies the [Sphere](#sphere) concept.
 
-#### Plane< T >
+### `Plane< T >`
 
 An implementation of the Geometry interface that satisfies the [Plane](#plane) concept.
 
-### OpenMath
+### `OpenMath`
 
 A collection of static functions to perform common mathematical operations.
 
@@ -345,7 +345,7 @@ The following expressions are used in the API:
 ##### `parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float ): T`
   Sets and returns `out` as the point `delta` along the cubic curve between the given `points` described by the given `matrix` and scaled by `weight`.
 
-### Geometry< T >
+### `Geometry< T >`
 
 ##### `hasRadius(): bool`
   Determines whether this geometry can calculate a finite radius.
@@ -366,7 +366,7 @@ The following expressions are used in the API:
 ##### `random( out:T, ?maxDistanceFromCenter:float=infinity, ?randomizer:function ): T`
   Sets and returns `out` as a random value in this geometry which is no more than `maxDistanceFromCenter` away from the center using the `randomizer` function to generate a number between 0 and 1.
 
-### Bounds< T > : Geometry< T >
+### `Bounds< T > : Geometry< T >`
 
 ##### `min: T`
   The minimum value which describes the bounds. The dimensions in this value must be less than or equal to the respective dimensions in `max`.
@@ -375,7 +375,7 @@ The following expressions are used in the API:
 ##### `thickness: float`
   The thickness of the edges of this bounds. A non-zero value adds rounded corners to the bounds.
 
-### Range< T > : Geometry< T >
+### `Range< T > : Geometry< T >`
 
 ##### `start: T`
   The starting value which describes the range.
@@ -384,7 +384,7 @@ The following expressions are used in the API:
 ##### `thickness: float`
   The thickness of this range. A non-zero value adds rounded corners to the range creating a "pill".
 
-### Line< T > : Geometry< T >
+### `Line< T > : Geometry< T >`
 
 ##### `start: T`
   The starting value which describes the line.
@@ -393,14 +393,14 @@ The following expressions are used in the API:
 ##### `thickness: float`
   The thickness of this line.
 
-### Sphere< T > : Geometry< T >
+### `Sphere< T > : Geometry< T >`
 
 ##### `center: T`
   The center value of this sphere.
 ##### `radius: float`
   The radius of this sphere.
 
-### Plane< T > : Geometry< T >
+### `Plane< T > : Geometry< T >`
 
 ##### `origin: T`
   The origin of this plane.
@@ -420,7 +420,7 @@ The following expressions are used in the API:
 
 ## Additional API
 
-### Calculator< T >
+### `Calculator< T >`
 
 ##### `setPool( pool[]:T )`
   Initializes the `pool` in the calculator with an already allocated array. The `pool` enables reuse of values that may be expensive to allocate. The create method of the calculator and all other methods which create a new value may take from this pool to avoid allocation.
