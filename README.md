@@ -18,39 +18,6 @@ In more detail:
   - They end with enough low-level details (equations, basic algorithms) so there isn't anything left unsolved for implementing libraries.
 - Provide a unified design which allows a single documentation source that multiple libraries across different languages can all share.
 
-### Concerns
-
-- These specifications provide powerful & generic solutions which inevitably adds overhead when compared to implementing a minimal solution to your problems.
-
-### Structure
-
-A specification has the following structure:
-
-- **Title**
-  - Short description of the topic which should be as universally understood as possible.
-- **Introduction**
-  - Sets specification expectations.
-- **Definition**
-  - Long description of the topic, includes other names and related topics.
-- **Problem Statement**
-  - List of challenges to be solved.
-- **Goals**
-  - The features for the specification and a set of solutions to the problems.
-- **Concepts**
-  - Words important to understanding how the specification is going to solve the problem.
-- **Design**
-  - Using the concepts, define structures and algorithms necessary to meet the goals.
-- **API**
-  - A language-agnostic definition of classes and services in the spec.
-- **Additional API**
-  - Possible functionality to be added to the implementations.
-- **Implementation**
-  - A detailed list of all equations and algorithms necessary to implement the spec.
-
-### Contributing
-
-You can contribute to defining these specifications by catching up with the current state of the specification and then filing an issue in the correct project. These issues will be where the feature evolves and is integrated into the specification.
-
 ### Specifications
 
 #### Math [v0.1.0](Math.md)
@@ -110,3 +77,36 @@ A specification which describes how user interface elements work (events), how t
 #### Tasks
 
 A specification which describes how to offload game logic or background rendering to threads. These tasks are small items which can trigger other tasks.
+
+### Structure
+
+A specification has the following structure:
+
+- **Title**
+  - Short description of the topic which should be as universally understood as possible.
+- **Introduction**
+  - Sets specification expectations.
+- **Definition**
+  - Long description of the topic, includes other names and related topics.
+- **Problem Statement**
+  - List of challenges to be solved.
+- **Goals**
+  - The features for the specification and a set of solutions to the problems.
+- **Concepts**
+  - Words important to understanding how the specification is going to solve the problem.
+- **Design**
+  - Using the concepts, define structures and algorithms necessary to meet the goals.
+- **API**
+  - A language-agnostic definition of classes and services in the spec.
+- **Additional API**
+  - Possible functionality to be added to the implementations.
+- **Implementation**
+  - A detailed list of all equations and algorithms necessary to implement the spec.
+  
+### Concerns
+
+- These specifications provide powerful & generic solutions which inevitably adds overhead when compared to implementing a minimal solution to your problems.
+
+### Contributing
+
+You can contribute to defining these specifications by catching up with the current state of the specification and then filing an issue in the correct project. These issues will be where the feature evolves and is integrated into the specification.
