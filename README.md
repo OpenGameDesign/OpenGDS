@@ -1,6 +1,6 @@
 # OpenGDS
 
-OpenGDS (or Open Game Design Specifications) is a collection of specifications which provide generic solutions in design and implementation to several problems faced in the game programming world. These specifications are on topics unrelated to graphics & rendering - as there are existing specifications around them.
+OpenGDS (or Open Game Design Specifications) is a collection of specifications which provide generic solutions in design and implementation to several problems faced in the game programming world.
 
 Knowledge you gain from learning the specifications will be transferable as implementations for various languages are created. The specifications will be used as documentation for the implementing projects, provide the API definition, and the equations and algorithms necessary for implementation.
 
@@ -53,7 +53,7 @@ You can contribute to defining these specifications by catching up with the curr
 
 ### Specifications
 
-#### Math
+#### Math [v0.1.0](Math.md)
 
 The math specification which defines data types, their calculators, and other foundational mathematical structures.
 
