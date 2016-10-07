@@ -268,17 +268,29 @@ The following expressions are used in the API:
   Sets the components of `out` to the value returned passing each component of `a`  to `op` and returns `out`.
 ##### `binary( out:T, a:T, b:T, op:BinaryOperation<S> ): T`
   Sets the components of `out` to the value returned passing each component of `a` and `b` to `op` and returns `out`.
-##### `scale( out:T, scale:float ): T`
+##### `scale( out:T, value:T, scale:float ): T`                     TODO
+  Multiples the components of `value` by `scale` and returns `out`.
+##### `scalei( out:T, scale:float ): T`
   Multiples the components of `out` by `scale` and returns `out`.
-##### `add( out:T, amount:T ): T`
+##### `add( out:T, augend:T, addend:T ): T`                                   TODO
   Adds the components of `amount` to `out` and returns `out`.
-##### `adds( out:T, amount:T, scale:float ): T`
+##### `addi( out:T, amount:T ): T`
+  Adds the components of `amount` to `out` and returns `out`.
+##### `adds( out:T, augend:T, addend:T, scale:float ): T`                     TODO
   Adds the components of `amount` multiplied by `scale` to `out` and returns `out`.
-##### `sub( out:T, amount:T ): T`
+##### `addsi( out:T, amount:T, scale:float ): T`
+  Adds the components of `amount` multiplied by `scale` to `out` and returns `out`.
+##### `sub( out:T, minuend:T, subtrahend:T ): T`                                   TODO    
   Subtracts the components of `amount` from `out` and returns `out`.
-##### `mul( out:T, scale:T ): T`
+##### `subi( out:T, amount:T ): T`
+  Subtracts the components of `amount` from `out` and returns `out`.
+##### `mul( out:T, value:T, scale:T ): T`                           TODO
   Multiplies the components of `out` by the components of `scale` and returns `out`.
-##### `div( out:T, denominator:T ): T`
+##### `muli( out:T, scale:T ): T`
+  Multiplies the components of `out` by the components of `scale` and returns `out`.
+##### `div( out:T, dividend:T, divisor:T ): T`                          TODO
+  Divides the components of `out` by the components of `denominator` and returns `out`. If a component of `denominator` is zero the component in `out` will be `zero`.
+##### `divi( out:T, divisor:T ): T`
   Divides the components of `out` by the components of `denominator` and returns `out`. If a component of `denominator` is zero the component in `out` will be `zero`.
 ##### `interpolate( out:T, start:T, end:T, delta:float ): T`
   Sets `out` to the value between `start` and `end` given a `delta` value. When `delta` is 0 `out` will be set to `start`, when `delta` is 1 `out` will be set to `end`, and when `delta` is set to 0.5 then `out` will be set to a value halfway between `start` and `end` (etc).
@@ -298,6 +310,10 @@ The following expressions are used in the API:
   Calculates the squared length of `value` - which is essentially the shortest distance from `value` to zero squared.
 ##### `normal( out:T, vector:T ): float`
   Sets `out` to the normal of `vector` and returns the length of `vector`.
+##### `normali( out:T, vector:T ): float`                       TODO
+  Sets `out` to the normal of `vector` and returns the length of `vector`.
+##### `isValue( value ): bool`  
+  Determines whether `value` can be handled by this calculator.
 ##### `isFinite( value:T ): bool`
   Determines whether the given `value` is finite. False is returned if any of the scalar values in the value are Infinity or NaN.
 ##### `isZero( value:T, ?epsilon:float=0.00001 ): bool`
@@ -306,9 +322,13 @@ The following expressions are used in the API:
   Determines whether `a` equals `b` within some `epsilon` threshold.
 ##### `dot( a:T, b:T ): float`
   Calculates and returns the dot product between `a` and `b`.
-##### `lengthen( out:T, length:float ): T`
+##### `lengthen( out:T, value:T, length:float ): T`           TODO
   Sets the length of `out` to `length` and returns `out`.
-##### `clamp( out:T, min:float, max:float ): T`
+##### `lengtheni( out:T, length:float ): T`
+  Sets the length of `out` to `length` and returns `out`.
+##### `clamp( out:T, value:T, min:float, max:float ): T`      TODO
+  Sets the length of `out` between `min` and `max` if it lies outside that range - and returns `out`.
+##### `clampi( out:T, min:float, max:float ): T`
   Sets the length of `out` between `min` and `max` if it lies outside that range - and returns `out`.
 ##### `sizeof( value:T ): size`
   Computes the size of `value` and returns it.
@@ -332,7 +352,7 @@ The following expressions are used in the API:
   Sets `out` to the spherical interpolation `delta` between `start` and `end` on the shortest arc between the two points and returns `out`.
 ##### `slerpNormal( out:T, start:T, end:T, delta:float ): T`
   Sets `out` to the spherical interpolation `delta` between the normals `start` and `end` on the shortest arc between the two normals and returns `out`.
-##### `slerp( out:T, start:T, end:T, delta:T, angle: T ): T`
+##### `slerp( out:T, start:T, end:T, delta:float, angle:float ): T`
   Sets `out` to the spherical interpolation `delta` between `start` and `end` on the arc with `angle` radians and returns `out`.
 ##### `delta( start:T, end:T, point:T ): float`
   Returns the value which describes the point on the infinitely long line between `start` and `end` that is perpendicular to the given `point`. If `point` is perpendicular to `start` then 0 is returned, if `point` is perpendicular to the average of `start` and `end` then 0.5 is returned, etc.
@@ -346,9 +366,9 @@ The following expressions are used in the API:
   Determines whether `point` is in the conical view starting at `origin` with the `direction` normal and the inner angle of the cone `fovCos` passed in as the cosine of the desired angle.
 ##### `isCircleView( origin:T, direction:T, fovTan:float, fovCos:float, center:T, radius:float, entirely:bool ): bool`
   Determines whether the circle at `center` with `radius` is in the conical view starting at `origin` with the `direction` normal and the inner angle of the cone `fovCos` passed in as the cosine of the desired angle.
-##### `cubicCurve( out:T, delta:float, p0:T, p1:T, p2:T, p3:T, matrix[4][4]:float ): T`
+##### `cubicCurve( out:T, delta:float, p0:T, p1:T, p2:T, p3:T, matrix[4][4]:float, ?inverse:bool=false ): T`
   Sets and returns `out` as the point `delta` along the cubic curve between the four given points `p0`, `p1`, `p2`, and `p3` described by the given `matrix`.
-##### `parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float ): T`
+##### `parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float, ?inverse:bool=false, ?loop:bool=false ): T`
   Sets and returns `out` as the point `delta` along the cubic curve between the given `points` described by the given `matrix` and scaled by `weight`.
 
 ### `CalculatorRegistry`
@@ -359,10 +379,6 @@ The following expressions are used in the API:
   Returns the calculator for the given `nameOrType`.
 ##### `register( namesOrTypes[], calculator:Calculator<T> )`
   Adds the given `calculator` to the registry for the given array of `namesOrTypes`.
-##### `getDefault(): Calculator<T>`
-  Returns the default calculator. The default calculator is returned when a calculator can't be determined in get or getFor. This is typically for loosely typed languages.
-##### `setDefault( calculator:Calculator<T> )`
-  Sets the default calculator. The default calculator is returned when a calculator can't be determined in get or getFor. This is typically for loosely typed languages.
 
 ### `Geometry< T >`
 
@@ -436,6 +452,14 @@ The following expressions are used in the API:
   Calculates the factorial of `a`.
 ##### `choose( n:int, m:int ): int`
   Calculates the binomial coefficient of `n` and `m`. This is used in combinatorics where it gives the number of ways, disregarding order, that `n` objects can be chosen from among `m` objects.
+##### `clamp( value:S, min:S, max:S ): S`
+  Returns `min` if `value` is less than `min`, returns `max` if `value` is greater than `max`, or just returns `value`.
+##### `divide( value:S, denominator: S ): S`
+  Performs a safe division avoiding divide by zero errors. If `denominator` is zero, then zero is returned. Otherwise `value / denomator` is returned.
+##### `equals( a:S, b:S, ?epsilon:S=0.00001 ): bool`
+  Determines whether `a` is equal to `b` - or no more different than `epsilon`.
+##### `quadraticFormula( a:S, b:S, c:S, noSolution:S ): S`
+  Finds the solution to the given quadratic formula variables. If no solution is found, `noSolution` is returned.
 
 ## Additional API
 
@@ -474,3 +498,418 @@ The following expressions are used in the API:
   Returns a random integer between `min` (inclusive) and `max` (inclusive).
 
 ## Implementation
+
+The following implementation example is pseudo-code and contains terms that might not be available in every language - but will have an equivalent way to express it.
+
+This implementation example expects that the implementing language has the following functions:
+- `Math.cos(a)`
+- `Math.sin(a)`
+- `Math.acos(a)`
+- `Math.sqrt(a)`
+- `Math.min(a, b)`
+- `Math.max(a, b)`
+- `Math.abs(a)`
+- `Math.floor(a)`
+- `Math.ceil(a)`
+- `Math.round(a)`
+
+### `CalculatorRegistry`
+
+```java
+class CalculatorRegistry {
+
+  private Calculator[] calculators = empty collection of Calculators;
+  private Map<Any, Calculator> calculatorMap = empty map;
+
+  public static getFor( value ): Calculator {
+    foreach ( calc in this.calculators ) {
+      if (calc.isValue( value )) {
+        return calc;
+      }
+    }
+    return null or throw an error;
+  }
+
+  public static get( nameOrType ): Calculator {
+    var calc = this.calculatorMap.get( nameOrType );
+    if (calc != null) {
+      return calc;
+    }
+    return null or throw an error;
+  }
+
+  public static register( namesOrTypes[], calculator:Calculator ) {
+    foreach ( key in namesOrTypes ) {
+      this.calculatorMap.put( key, calculator );
+    }
+    this.calculators.add( calculator );
+  }
+
+}
+```
+
+### `Calculator< T >``
+
+```java
+abstract class Calculator<T> {
+
+  ZERO: T;
+
+  ONE: T;
+
+  TEMP0: T;
+  TEMP1: T;
+
+  pool[]: T;
+  poolSize: int = 0;
+
+  // Constructor
+  public Calculator() {
+    this.ZERO = this.createUniform( 0 );
+    this.ONE = this.createUniform( 1 );
+    this.TEMP0 = this.createUniform( 0 );
+    this.TEMP1 = this.createUniform( 0 );
+  }
+
+  public create(): T {
+    if (this.poolSize > 0) {
+      return this.clear( this.pool[ --this.poolSize ], 0 );
+    } else {
+      return new T;
+    }
+  }
+
+  public createUniform( component:S ): T {
+    return this.clear( this.create(), component );
+  }
+
+  public setPool( pool[]:T ) {
+    for (index in pool) {
+      pool[ index ] = this.create();
+    }
+    this.pool = pool;
+  }
+
+  public recycle( value:T ): bool {
+    if (this.poolSize < this.pool.length) {
+      this.pool[ this.poolSize++ ] = value;
+    }
+  }
+
+  public clone( source:T ): T {
+    return this.copy( this.create(), source );
+  }
+
+  public abstract copy( out:T, source:T ): T
+  // out.x = source.x
+
+  public abstract parse( input, ?defaultValue:T=0 ): T
+
+  public parseArray( input[], ?output[]:T, ?defaultValue:T=0 ): T[] {
+    if (output == null) {
+      output = new T[ input.length ];
+    }
+    foreach (index in input) {
+      output[ index ] = this.parse( input[ index ], defaultValue );
+    }
+    return output;
+  }
+
+  public abstract clear( out:T, ?component:S=0 ): T
+  // out.x = component
+
+  public abstract unary( out:T, a:T, op:UnaryOperation<S> ): T
+  // out.x = op( a.x )
+
+  public abstract binary( out:T, a:T, b:T, op:BinaryOperation<S> ): T
+  // out.x = op( a.x, b.x )
+
+  public abstract adds( out:T, augend:T, addend:T, scale:float ): T
+  // out.x = augend.x + addend.x * scale;
+
+  public addsi( out:T, addend:T, scale:float ): T {
+    // out.x = out.x + addend.x * scale;
+    return this.adds( out, out, addend, scale );
+  }
+
+  public scale( out:T, value:T, scale:float ): T {
+    // out.x = value.x * scale
+    return this.adds( out, this.ZERO, value, scale );
+  }
+
+  public scalei( out:T, scale:float ): T {
+    // out.x *= scale
+    return this.adds( out, this.ZERO, out, scale );
+  }
+
+  public add( out:T, augend:T, addend:T ): T {
+    // out.x = augend.x + addend.x;
+    return this.adds( out, augend, addend, 1 );
+  }
+
+  public addi( out:T, amount:T ): T {
+    // out.x += amount.x;
+    return this.adds( out, out, amount, 1 );
+  }
+
+  public sub( out:T, minuend:T, subtrahend:T ): T {
+    // out.x = minuend.x - subtrahend.x;
+    return this.adds( out, minuend, subtrahend, -1 );
+  }
+
+  public subi( out:T, subtrahend:T ): T {
+    // out.x -= subtrahend.x
+    return this.adds( out, out, subtrahend, -1 );
+  }
+
+  public abstract mul( out:T, value:T, scale:T ): T
+  // out.x = value.x * scale.x
+
+  public muli( out:T, scale:T ): T {
+    // out.x *= scale.x
+    return this.mul( out, out, scale );
+  }
+
+  public abstract div( out:T, dividend:T, divisor:T ): T
+  // out.x = OpenMath.divide( dividend.x, divisor.x )
+
+  public divi( out:T, divisor:T ): T {
+    // out.x = OpenMath.divide( out.x, denominator.x )
+    return this.div( out, out, divisor );
+  }
+
+  public interpolate( out:T, start:T, end:T, delta:float ): T {
+    // out.x = (end.x - start.x) * delta + start.x
+    out = this.adds( out, this.ZERO, start, 1 - delta );
+    out = this.adds( out, out, end, delta );
+    return out;
+  }
+
+  public abstract contain( out:T, min:T, max:T ): T
+  // out.x = OpenMath.clamp( out.x, min.x, max.x )
+
+  public abstract contains( point:T, min:T, max:T ): bool
+  // return point >= min && point <= max
+
+  public abstract random( out:T, min:T, max:T, ?randomizer:function ): T
+  // out.x = randomizer( min.x, max.x )
+
+  public distance( a:T, b:T ): float {
+    return Math.sqrt( this.distanceSq( a, b ) );
+  }
+
+  public distanceSq( a:T, b:T ): float {
+    T diff = this.sub( this.TEMP0, a, b );
+    return this.dot( diff, diff );
+  }
+
+  public length( value:T ): float {
+    return Math.sqrt( this.lengthSq( value ) );
+  }
+
+  public lengthSq( value:T ): float {
+    return this.dot( value, value );
+  }
+
+  public normal( out:T, vector:T ): float {
+    float lsq = this.lengthSq( vector );
+    this.copy( out, vector );
+    if (lsq !== 1.0 && lsq != 0.0){
+      this.scalei( out, 1 / Math.sqrt( lsq ) );
+    }
+    return out;
+  }
+
+  public abstract isValue( value ): bool
+
+  public abstract isFinite( value:T ): bool
+
+  public isZero( value:T, ?epsilon:float=0.00001 ): bool {
+    return this.isEqual( value, this.ZERO, epsilon );
+  }
+
+  public abstract isEqual( a:T, b:T, ?epsilon:float=0.00001 ): bool
+  // return OpenMath.equals( a.x, b.x, epsilon ) && ...
+
+  public abstract dot( a:T, b:T ): float
+  // return a.x * b.x + a.y * b.y + ...
+
+  public lengthen( out:T, value:T, length:float ): T {
+    return this.clamp( out, value, length, length );
+  }
+
+  public lengtheni( out:T, length:float ): T {
+    return this.clampi( out, length, length );
+  }
+
+  public clamp( out:T, value:T, min:float, max:float ): T {
+    float valueSq = this.lengthSq( value );
+    if (valueSq != 0.0) {
+      if (valueSq < min * min) {
+        return this.scale( out, value, min / Math.sqrt( valueSq ) );
+      }
+      else if (valueSq > max * max) {
+        return this.scale( out, value, max / Math.sqrt( valueSq ) );
+      }
+    }
+    return this.copy( out, value );
+  }
+
+  public clampi( out:T, min:float, max:float ): T {
+    return this.clamp( out, out, min, max );
+  }
+
+  public abstract sizeof( value:T ): size
+
+  public abstract write( value:T, to:Output ): size
+
+  public abstract read( out:T, from:Input ): T
+
+  public abstract getComponents(): int
+
+  public abstract getComponent( value:T, index:int ): S
+
+  public abstract setComponent( value:T, index:int, component:S ): T
+
+  public getDimensions(): int {
+    return this.getComponents();
+  }
+
+  public getDimension( value:T, index:int ): S {
+    return this.getComponent( value, index );
+  }
+
+  public setDimension( value:T, index:int, dimension:S ): T {
+    return this.setComponent( value, index, dimension );
+  }
+
+  public slerpDirect( out:T, start:T, end:T, delta:float ): T {
+    float startLength = this.length( start );
+    float endLength = this.length( end );
+    float lengthSq = startLength * endLength;
+    float dot = this.dot( start, end );
+    float angle = Math.acos( dot / lengthSq );
+    return this.slerp( out, start, end, delta, angle );
+  }
+
+  public slerpNormal( out:T, start:T, end:T, delta:float ): T {
+    float dot = this.dot( start, end );
+    float angle = Math.acos( dot / lengthSq );
+    return this.slerp( out, start, end, delta, angle );
+  }
+
+  public slerp( out:T, start:T, end:T, delta:float, angle:float ): T {
+    float invDenom = OpenMath.divide( 1, Math.sin( angle ) );
+    float d0 = Math.sin( (1 - delta) * angle ) * invDenom;
+    float d1 = Math.cos( delta * angle ) * invDenom;
+
+    out = this.scale( out, end, d1 );
+    out = this.addsi( out, start, d0 );
+    return out;
+  }
+
+  public delta( start:T, end:T, point:T ): float {
+    T p0 = this.sub( this.TEMP0, end, start );
+    T p1 = this.sub( this.TEMP1, start, point );
+
+    float dot = this.dot( p0, p1 );
+    float dsq = this.lengthSq( p0 );
+    float delta = dot / dsq;
+    return delta;
+  }
+
+  public closest( out:T, start:T, end:T, point:T, ?line:bool=false ): T {
+    float delta = this.delta( start, end, point );
+    if (!line) {
+      delta = OpenMath.clamp( delta, 0, 1 );
+    }
+    return this.interpolate( out, start, end, delta );
+  }
+
+  public interceptionTime( shooter:T, speed:float, targetPosition:T, targetVelocity:T ): float {
+    T direct = this.sub( this.TEMP0, targetPosition, shooter );
+
+    float a = this.lengthSq( targetVelocity ) - ( shooterSpeed * shooterSpeed );
+    float b = 2.0 * this.dot( targetVelocity, direct );
+    float c = this.lengthSq( direct );
+
+    return OpenMath.quadraticFormula( a, b, c, -1 );
+  }
+
+  public distanceFrom( start:T, end:T, point:T, ?line:bool=false ): float {
+    float delta = this.delta( start, end, point );
+    if (!line) {
+      delta = OpenMath.clamp( delta, 0, 1 );
+    }
+    T projected = this.interpolate( this.TEMP0, start, end, delta );
+    return this.distance( point, projected );
+  }
+
+  public inView( origin:T, direction:T, fovCos:float, point:T ): bool {
+    T diff = this.sub( this.TEMP0, origin, point );
+    return this.dot( diff, direction ) > fovCos;
+  }
+
+  public isCircleView( origin:T, direction:T, fovTan:float, fovCos:float, center:T, radius:float, entirely:bool ): bool {
+    T circleToOrigin = this.sub( this.TEMP0, center, origin );
+
+    float distanceAlongDirection = this.dot( circleToOrigin, direction );
+    float coneRadius = distanceAlongDirection * fovTan;                       
+    float distanceFromAxis = Math.sqrt( this.lengthSq( circleToOrigin ) - distanceAlongDirection * distanceAlongDirection );
+    float distanceFromCenterToCone = distanceFromAxis - coneRadius;                              
+    float shortestDistance = distanceFromCenterToCone * fovCos;                          
+
+    if (entirely) {
+        shortestDistance += radius;
+    } else {
+        shortestDistance -= radius;
+    }
+
+    return shortestDistance <= 0;
+  }
+
+  public cubicCurve( out:T, delta:float, p0:T, p1:T, p2:T, p3:T, matrix[4][4]:float, ?inverse:bool=false ): T {
+    float d0 = 1.0;
+    float d1 = delta;
+    float d2 = d1 * d1;
+    float d3 = d2 * d1;
+
+    float[] ts = [
+      inverse ? d3 : d0,
+      inverse ? d2 : d1,
+      inverse ? d1 : d2,
+      inverse ? d1 : d3
+    ];
+
+    T temp = this.TEMP0;
+    out = this.clear( out );
+
+    for (i = 0; i < 4; i++) {
+      temp = this.clear( temp );
+      temp = this.addsi( temp, p0, matrix[ i ][ 0 ] );
+      temp = this.addsi( temp, p1, matrix[ i ][ 1 ] );
+      temp = this.addsi( temp, p2, matrix[ i ][ 2 ] );
+      temp = this.addsi( temp, p3, matrix[ i ][ 3 ] );
+      out = this.addsi( out, temp, ts[ i ] );
+    }
+    return out;
+  }
+
+  public parametricCubicCurve( out:T, delta:float, points[]:T, matrix[4][4]:float, weight:float, ?inverse:bool=false, ?loop:bool=false ): T {
+    float n = points.length - 1;
+    float a = delta * n;
+    float i = OpenMath.clamp( Math.floor( a ), 0, n - 1 );
+    float d = a - i;
+
+    T p0 = (i == 0 ? (loop ? points[n] : points[0]) : points[i - 1]);
+    T p1 = points[i];
+    T p2 = points[i + 1];
+    T p3 = (i == n - 1 ? (loop ? points[0] : points[n]) : points[i + 2]);
+
+    out = this.cubicCurve( out, d, p0, p1, p2, p3, matrix, inverse );
+    out = this.scalei( out, weight );
+    return out;
+  }
+
+}
+```
