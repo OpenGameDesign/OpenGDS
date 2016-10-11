@@ -266,33 +266,51 @@ The following expressions are used in the API:
   Sets the components of `out` to `component` and returns `out`.
 ##### `unary( out:T, a:T, op:UnaryOperation<S> ): T`
   Sets the components of `out` to the value returned passing each component of `a`  to `op` and returns `out`.
+##### `unaryn( a:T, op:UnaryOperation<S> ): T`
+  Sets the components of `out` to the value returned passing each component of `a`  to `op` and returns `out`.
 ##### `binary( out:T, a:T, b:T, op:BinaryOperation<S> ): T`
   Sets the components of `out` to the value returned passing each component of `a` and `b` to `op` and returns `out`.
+##### `binaryn( a:T, b:T, op:BinaryOperation<S> ): T`
+  Sets the components of `out` to the value returned passing each component of `a` and `b` to `op` and returns `out`.
 ##### `scale( out:T, value:T, scale:float ): T`                     TODO
+  Multiples the components of `value` by `scale` and returns `out`.
+##### `scalen( value:T, scale:float ): T`                     TODO
   Multiples the components of `value` by `scale` and returns `out`.
 ##### `scalei( out:T, scale:float ): T`
   Multiples the components of `out` by `scale` and returns `out`.
 ##### `add( out:T, augend:T, addend:T ): T`                                   TODO
   Adds the components of `amount` to `out` and returns `out`.
+##### `addn( augend:T, addend:T ): T`                                   TODO
+  Adds the components of `amount` to `out` and returns `out`.
 ##### `addi( out:T, amount:T ): T`
   Adds the components of `amount` to `out` and returns `out`.
 ##### `adds( out:T, augend:T, addend:T, scale:float ): T`                     TODO
+  Adds the components of `amount` multiplied by `scale` to `out` and returns `out`.
+##### `addsn( augend:T, addend:T, scale:float ): T`                     TODO
   Adds the components of `amount` multiplied by `scale` to `out` and returns `out`.
 ##### `addsi( out:T, amount:T, scale:float ): T`
   Adds the components of `amount` multiplied by `scale` to `out` and returns `out`.
 ##### `sub( out:T, minuend:T, subtrahend:T ): T`                                   TODO    
   Subtracts the components of `amount` from `out` and returns `out`.
+##### `subn( minuend:T, subtrahend:T ): T`                                   TODO    
+  Subtracts the components of `amount` from `out` and returns `out`.
 ##### `subi( out:T, amount:T ): T`
   Subtracts the components of `amount` from `out` and returns `out`.
 ##### `mul( out:T, value:T, scale:T ): T`                           TODO
+  Multiplies the components of `out` by the components of `scale` and returns `out`.
+##### `muln( value:T, scale:T ): T`                           TODO
   Multiplies the components of `out` by the components of `scale` and returns `out`.
 ##### `muli( out:T, scale:T ): T`
   Multiplies the components of `out` by the components of `scale` and returns `out`.
 ##### `div( out:T, dividend:T, divisor:T ): T`                          TODO
   Divides the components of `out` by the components of `denominator` and returns `out`. If a component of `denominator` is zero the component in `out` will be `zero`.
+##### `divn( dividend:T, divisor:T ): T`                          TODO
+  Divides the components of `out` by the components of `denominator` and returns `out`. If a component of `denominator` is zero the component in `out` will be `zero`.
 ##### `divi( out:T, divisor:T ): T`
   Divides the components of `out` by the components of `denominator` and returns `out`. If a component of `denominator` is zero the component in `out` will be `zero`.
 ##### `interpolate( out:T, start:T, end:T, delta:float ): T`
+  Sets `out` to the value between `start` and `end` given a `delta` value. When `delta` is 0 `out` will be set to `start`, when `delta` is 1 `out` will be set to `end`, and when `delta` is set to 0.5 then `out` will be set to a value halfway between `start` and `end` (etc).
+##### `interpolaten( start:T, end:T, delta:float ): T`
   Sets `out` to the value between `start` and `end` given a `delta` value. When `delta` is 0 `out` will be set to `start`, when `delta` is 1 `out` will be set to `end`, and when `delta` is set to 0.5 then `out` will be set to a value halfway between `start` and `end` (etc).
 ##### `contain( out:T, min:T, max:T ): T`
   Adjusts `out` to be contained between the area between `min` and `max` (if it's outside that area) and returns `out`.
@@ -310,6 +328,8 @@ The following expressions are used in the API:
   Calculates the squared length of `value` - which is essentially the shortest distance from `value` to zero squared.
 ##### `normal( out:T, vector:T ): float`
   Sets `out` to the normal of `vector` and returns the length of `vector`.
+##### `normaln( vector:T ): float`
+  Sets `out` to the normal of `vector` and returns the length of `vector`.
 ##### `normali( out:T, vector:T ): float`                       TODO
   Sets `out` to the normal of `vector` and returns the length of `vector`.
 ##### `isValue( value ): bool`  
@@ -324,9 +344,13 @@ The following expressions are used in the API:
   Calculates and returns the dot product between `a` and `b`.
 ##### `lengthen( out:T, value:T, length:float ): T`           TODO
   Sets the length of `out` to `length` and returns `out`.
+##### `lengthenn( value:T, length:float ): T`           TODO
+  Sets the length of `out` to `length` and returns `out`.
 ##### `lengtheni( out:T, length:float ): T`
   Sets the length of `out` to `length` and returns `out`.
 ##### `clamp( out:T, value:T, min:float, max:float ): T`      TODO
+  Sets the length of `out` between `min` and `max` if it lies outside that range - and returns `out`.
+##### `clampn( value:T, min:float, max:float ): T`      TODO
   Sets the length of `out` between `min` and `max` if it lies outside that range - and returns `out`.
 ##### `clampi( out:T, min:float, max:float ): T`
   Sets the length of `out` between `min` and `max` if it lies outside that range - and returns `out`.
@@ -621,11 +645,26 @@ abstract class Calculator<T> {
   public abstract unary( out:T, a:T, op:UnaryOperation<S> ): T
   // out.x = op( a.x )
 
+  public unaryn( a:T, op:UnaryOperation<S> ): T {
+    // return op( a.x )
+    return this.unary( this.create(), a, op );
+  }
+
   public abstract binary( out:T, a:T, b:T, op:BinaryOperation<S> ): T
   // out.x = op( a.x, b.x )
 
+  public binaryn( a:T, b:T, op:BinaryOperation<S> ): T {
+    // return op( a.x, b.x )
+    return this.binary( this.create(), a, b, op );
+  }
+
   public abstract adds( out:T, augend:T, addend:T, scale:float ): T
   // out.x = augend.x + addend.x * scale;
+
+  public addsn( augend:T, addend:T, scale:float ): T {
+    // return augend.x + addend.x * scale;
+    return this.adds( this.create(), augend, addend, scale );
+  }
 
   public addsi( out:T, addend:T, scale:float ): T {
     // out.x = out.x + addend.x * scale;
@@ -635,6 +674,11 @@ abstract class Calculator<T> {
   public scale( out:T, value:T, scale:float ): T {
     // out.x = value.x * scale
     return this.adds( out, this.ZERO, value, scale );
+  }
+
+  public scalen( value:T, scale:float ): T {
+    // return value.x * scale
+    return this.adds( this.create(), this.ZERO, value, scale );
   }
 
   public scalei( out:T, scale:float ): T {
@@ -647,6 +691,11 @@ abstract class Calculator<T> {
     return this.adds( out, augend, addend, 1 );
   }
 
+  public addn( augend:T, addend:T ): T {
+    // return augend.x + addend.x;
+    return this.adds( this.create(), augend, addend, 1 );
+  }
+
   public addi( out:T, amount:T ): T {
     // out.x += amount.x;
     return this.adds( out, out, amount, 1 );
@@ -657,6 +706,11 @@ abstract class Calculator<T> {
     return this.adds( out, minuend, subtrahend, -1 );
   }
 
+  public subn( minuend:T, subtrahend:T ): T {
+    // return minuend.x - subtrahend.x;
+    return this.adds( this.create(), minuend, subtrahend, -1 );
+  }
+
   public subi( out:T, subtrahend:T ): T {
     // out.x -= subtrahend.x
     return this.adds( out, out, subtrahend, -1 );
@@ -664,6 +718,11 @@ abstract class Calculator<T> {
 
   public abstract mul( out:T, value:T, scale:T ): T
   // out.x = value.x * scale.x
+
+  public muln( value:T, scale:T ): T {
+    // return value.x * scale.x
+    return this.mul( this.create(), value, scale );
+  }
 
   public muli( out:T, scale:T ): T {
     // out.x *= scale.x
@@ -673,6 +732,11 @@ abstract class Calculator<T> {
   public abstract div( out:T, dividend:T, divisor:T ): T
   // out.x = OpenMath.divide( dividend.x, divisor.x )
 
+  public divn( dividend:T, divisor:T ): T {
+    // return OpenMath.divide( out.x, denominator.x )
+    return this.div( this.create, dividend, divisor );
+  }
+
   public divi( out:T, divisor:T ): T {
     // out.x = OpenMath.divide( out.x, denominator.x )
     return this.div( out, out, divisor );
@@ -680,6 +744,14 @@ abstract class Calculator<T> {
 
   public interpolate( out:T, start:T, end:T, delta:float ): T {
     // out.x = (end.x - start.x) * delta + start.x
+    out = this.adds( out, this.ZERO, start, 1 - delta );
+    out = this.adds( out, out, end, delta );
+    return out;
+  }
+
+  public interpolaten( end:T, delta:float ): T {
+    // out.x = (end.x - start.x) * delta + start.x
+    T out = this.create();
     out = this.adds( out, this.ZERO, start, 1 - delta );
     out = this.adds( out, out, end, delta );
     return out;
@@ -720,6 +792,10 @@ abstract class Calculator<T> {
     return out;
   }
 
+  public normaln( vector:T ): float {
+    return this.normal( this.create(), vector );
+  }
+
   public abstract isValue( value ): bool
 
   public abstract isFinite( value:T ): bool
@@ -738,6 +814,10 @@ abstract class Calculator<T> {
     return this.clamp( out, value, length, length );
   }
 
+  public lengthenn( value:T, length:float ): T {
+    return this.clampn( value, length, length );
+  }
+
   public lengtheni( out:T, length:float ): T {
     return this.clampi( out, length, length );
   }
@@ -753,6 +833,10 @@ abstract class Calculator<T> {
       }
     }
     return this.copy( out, value );
+  }
+
+  public clampn( value:T, min:float, max:float ): T {
+    return this.clamp( this.create(), out, min, max );
   }
 
   public clampi( out:T, min:float, max:float ): T {
